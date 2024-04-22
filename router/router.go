@@ -5,16 +5,13 @@ import "github.com/gin-gonic/gin"
 
 func Initialize() {
 	// geralmente as variaveis são efemeras - curtas
-	// Inicia o Router com as configs padroes do GIN
+
+	// Init routers with gin framework
 	router := gin.Default()
 
-	// Definição de rotas!
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+	// Init routes
+	initializeRoutes(router)
 
-	// Rodando a APLICAÇÃO
+	// Run the Application/Server in a port your like
 	router.Run(":3000") // listen and serve on 0.0.0.0:3000
 }
