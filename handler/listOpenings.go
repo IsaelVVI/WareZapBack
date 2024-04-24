@@ -11,7 +11,7 @@ import (
 
 // @Summary List opening
 // @Description List all job opening
-// @Tags Opening
+// @Tags Openings
 // @Accept json
 // @Produce json
 // @Succcess 200 {object} ListOpeningsResponse
