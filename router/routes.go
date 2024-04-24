@@ -1,15 +1,22 @@
 package router
 
 import (
+	"github.com/IsaelVVI/warezapback.git/docs"
 	"github.com/IsaelVVI/warezapback.git/handler"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func initializeRoutes(router *gin.Engine) {
 	// initialize Handler
 	handler.InitializeHandler()
 
-	v1 := router.Group("/api/v1")
+	basePath := "/api/v1"
+
+	docs.SwaggerInfo.BasePath = basePath
+
+	v1 := router.Group(basePath)
 	{
 		v1.GET("/tests", handler.ListOpeningHandler)
 
@@ -22,4 +29,6 @@ func initializeRoutes(router *gin.Engine) {
 		v1.DELETE("/teste", handler.DeleteOpeningHandler)
 
 	}
+	// Initialize Swagger
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 }
