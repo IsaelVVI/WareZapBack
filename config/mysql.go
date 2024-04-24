@@ -11,7 +11,7 @@ func InitializeMysql() (*gorm.DB, error) {
 	logger := GetLogger("mysql")
 
 	// create Database and connect
-	dsn := "root:@tcp(127.0.0.1:3306)/warezap"
+	dsn := "root:@tcp(127.0.0.1:3306)/warezap?parseTime=true"
 	db, err := gorm.Open(mysql.Open(dsn))
 
 	if err != nil {

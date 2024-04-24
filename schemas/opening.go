@@ -7,7 +7,7 @@ import (
 )
 
 type Opening struct {
-	Id        uint `gorm:"primaryKey;autoIncrement"`
+	ID        uint `gorm:"primaryKey;autoIncrement"`
 	Role      string
 	Company   string
 	Location  string
@@ -20,7 +20,7 @@ type Opening struct {
 }
 
 type OpeningResponse struct {
-	Id        uint      `json:"id"`
+	ID        uint      `json:"id"`
 	Role      string    `json:"role"`
 	Company   string    `json:"company"`
 	Location  string    `json:"location"`
