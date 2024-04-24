@@ -98,4 +98,23 @@ paths:
       summary: Create opening
       tags:
       - Opening
+  /tests:
+    get:
+      consumes:
+      - application/json
+      description: List all job opening
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: List opening
+      tags:
+      - Opening
 swagger: "2.0"
