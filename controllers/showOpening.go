@@ -1,4 +1,4 @@
-package handler
+package controllers
 
 import (
 	"net/http"
@@ -19,21 +19,21 @@ import (
 // @Failure 400 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
 // @Router /teste [get]
-func ShowOpeningHandler(ctx *gin.Context) {
+func ShowOpening(ctx *gin.Context) {
 	id := ctx.Query("id")
 
 	if id == "" {
-		sendError(ctx, http.StatusBadRequest, errParamIsRequired("id", "queryParameter").Error())
+		SendError(ctx, http.StatusBadRequest, errParamIsRequired("id", "queryParameter").Error())
 		return
 	}
 
 	opening := schemas.Opening{}
 
 	if err := db.First(&opening, id).Error; err != nil {
-		sendError(ctx, http.StatusNotFound, "opening not found")
+		SendError(ctx, http.StatusNotFound, "opening not found")
 		return
 	}
 
-	sendSuccess(ctx, "show-opening", opening)
+	SendSuccess(ctx, "show-opening", opening)
 
 }

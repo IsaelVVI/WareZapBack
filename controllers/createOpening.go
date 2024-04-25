@@ -1,4 +1,4 @@
-package handler
+package controllers
 
 import (
 	"net/http"
@@ -19,7 +19,7 @@ import (
 // @Failure 400 {object} ErrorResponse
 // @Failure 500 {object} ErrorResponse
 // @Router /teste [post]
-func CreateOpeningHandler(ctx *gin.Context) {
+func CreateOpening(ctx *gin.Context) {
 	// verify body request with struc creat opening
 	request := CreateOpeningRequest{}
 
@@ -27,7 +27,7 @@ func CreateOpeningHandler(ctx *gin.Context) {
 
 	if err := request.Validate(); err != nil {
 		logger.Errorf("validation error: %v", err.Error())
-		sendError(ctx, http.StatusBadRequest, err.Error())
+		SendError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -42,9 +42,9 @@ func CreateOpeningHandler(ctx *gin.Context) {
 
 	if err := db.Create(&opening).Error; err != nil {
 		logger.Errorf("error creating opening: %v", err.Error())
-		sendError(ctx, http.StatusInternalServerError, "erro creating opening on database")
+		SendError(ctx, http.StatusInternalServerError, "erro creating opening on database")
 		return
 	}
 
-	sendSuccess(ctx, "create-opening", opening)
+	SendSuccess(ctx, "create-opening", opening)
 }

@@ -1,4 +1,4 @@
-package handler
+package controllers
 
 import (
 	"net/http"
@@ -20,28 +20,28 @@ import (
 // @Failure 400 {object} ErrorResponse
 // @Failure 404 {object} ErrorResponse
 // @Router /teste [put]
-func UpdateOpeningHandler(ctx *gin.Context) {
+func UpdateOpening(ctx *gin.Context) {
 	request := UpdateOpeningRequest{}
 
 	ctx.BindJSON(&request)
 
 	if err := request.Validate(); err != nil {
 		logger.Errorf("validation error: %v", err.Error())
-		sendError(ctx, http.StatusBadRequest, err.Error())
+		SendError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
 
 	id := ctx.Query("id")
 
 	if id == "" {
-		sendError(ctx, http.StatusBadRequest, errParamIsRequired("id", "string").Error())
+		SendError(ctx, http.StatusBadRequest, errParamIsRequired("id", "string").Error())
 		return
 	}
 
 	opening := schemas.Opening{}
 
 	if err := db.First(&opening, id).Error; err != nil {
-		sendError(ctx, http.StatusNotFound, "opening not found")
+		SendError(ctx, http.StatusNotFound, "opening not found")
 		return
 	}
 
@@ -74,9 +74,9 @@ func UpdateOpeningHandler(ctx *gin.Context) {
 	// Save Opening
 	if err := db.Save(&opening).Error; err != nil {
 		logger.Errorf("error updating opening: %v", err.Error())
-		sendError(ctx, http.StatusInternalServerError, "error updating opening")
+		SendError(ctx, http.StatusInternalServerError, "error updating opening")
 	}
 
-	sendSuccess(ctx, "update-opening", opening)
+	SendSuccess(ctx, "update-opening", opening)
 
 }

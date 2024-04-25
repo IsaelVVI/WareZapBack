@@ -1,4 +1,4 @@
-package handler
+package controllers
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func sendError(ctx *gin.Context, code int, msg string) {
+func SendError(ctx *gin.Context, code int, msg string) {
 	ctx.Header("Content-type", "application/json")
 	ctx.JSON(code, gin.H{
 		"errorCode": code,
@@ -16,12 +16,16 @@ func sendError(ctx *gin.Context, code int, msg string) {
 	})
 }
 
-func sendSuccess(ctx *gin.Context, operation string, data interface{}) {
+func SendSuccess(ctx *gin.Context, operation string, data interface{}) {
 	ctx.Header("Content-type", "application/json")
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": fmt.Sprintf("operation from handler: %s successfull", operation),
 		"data":    data,
 	})
+}
+
+type LoginResponse struct {
+	Token string `json:"token"`
 }
 
 type ErrorResponse struct {

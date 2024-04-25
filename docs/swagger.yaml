@@ -1,5 +1,5 @@
 definitions:
-  handler.CreateOpeningRequest:
+  controllers.CreateOpeningRequest:
     properties:
       company:
         type: string
@@ -14,14 +14,30 @@ definitions:
       salary:
         type: integer
     type: object
-  handler.ErrorResponse:
+  controllers.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  controllers.ErrorResponse:
     properties:
       errorCode:
         type: string
       message:
         type: string
     type: object
-  handler.UpdateOpeningRequest:
+  controllers.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  controllers.UpdateOpeningRequest:
     properties:
       company:
         type: string
@@ -39,6 +55,58 @@ definitions:
 info:
   contact: {}
 paths:
+  /create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Create user
+      tags:
+      - Users
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user
+      parameters:
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controllers.ErrorResponse'
+      summary: Login
+      tags:
+      - Auth
   /teste:
     delete:
       consumes:
@@ -56,11 +124,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
       summary: Delete opening
       tags:
       - Openings
@@ -80,11 +148,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
       summary: Show opening
       tags:
       - Openings
@@ -98,18 +166,18 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/handler.CreateOpeningRequest'
+          $ref: '#/definitions/controllers.CreateOpeningRequest'
       produces:
       - application/json
       responses:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
       summary: Create opening
       tags:
       - Openings
@@ -128,18 +196,18 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/handler.UpdateOpeningRequest'
+          $ref: '#/definitions/controllers.UpdateOpeningRequest'
       produces:
       - application/json
       responses:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
       summary: Show opening
       tags:
       - Openings
@@ -154,11 +222,11 @@ paths:
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
         "404":
           description: Not Found
           schema:
-            $ref: '#/definitions/handler.ErrorResponse'
+            $ref: '#/definitions/controllers.ErrorResponse'
       summary: List opening
       tags:
       - Openings

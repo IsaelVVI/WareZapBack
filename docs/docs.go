@@ -15,6 +15,86 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/create": {
+            "post": {
+                "description": "Create a new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create user",
+                "parameters": [
+                    {
+                        "description": "Request body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.CreateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "description": "Create a new user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "parameters": [
+                    {
+                        "description": "Request body",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/controllers.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controllers.ErrorResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/teste": {
             "get": {
                 "description": "Show a job opening",
@@ -41,13 +121,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     }
                 }
@@ -78,7 +158,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.UpdateOpeningRequest"
+                            "$ref": "#/definitions/controllers.UpdateOpeningRequest"
                         }
                     }
                 ],
@@ -86,13 +166,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     }
                 }
@@ -116,7 +196,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/handler.CreateOpeningRequest"
+                            "$ref": "#/definitions/controllers.CreateOpeningRequest"
                         }
                     }
                 ],
@@ -124,13 +204,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     }
                 }
@@ -160,13 +240,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     }
                 }
@@ -189,13 +269,13 @@ const docTemplate = `{
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     },
                     "404": {
                         "description": "Not Found",
                         "schema": {
-                            "$ref": "#/definitions/handler.ErrorResponse"
+                            "$ref": "#/definitions/controllers.ErrorResponse"
                         }
                     }
                 }
@@ -203,7 +283,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "handler.CreateOpeningRequest": {
+        "controllers.CreateOpeningRequest": {
             "type": "object",
             "properties": {
                 "company": {
@@ -226,7 +306,21 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.ErrorResponse": {
+        "controllers.CreateUserRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.ErrorResponse": {
             "type": "object",
             "properties": {
                 "errorCode": {
@@ -237,7 +331,18 @@ const docTemplate = `{
                 }
             }
         },
-        "handler.UpdateOpeningRequest": {
+        "controllers.LoginRequest": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "controllers.UpdateOpeningRequest": {
             "type": "object",
             "properties": {
                 "company": {
